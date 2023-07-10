@@ -11,12 +11,12 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
   addSurvey(surveyData: any) {
-    return this.http.post<any>(`${this.apiURL}`, surveyData)
+    return this.http.post<any>(`${this.apiURL}surveyors/new`, surveyData)
   }
   getSurvey(claimId: any) {
-    return this.http.get<any>(`${this.apiURL}`)
+    return this.http.get<any>(`${this.apiURL}surveyors/${claimId}`)
   }
   updateSurvey(surveyData: any) {
-    return this.http.put<any>(`${this.apiURL}`, surveyData)
+    return this.http.put<any>(`${this.apiURL}surveyors/${surveyData.claimId}`, surveyData)
   }
 }
