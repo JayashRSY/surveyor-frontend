@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { DataService } from '../services/data.service';
 @Component({
   selector: 'app-add-survey',
   templateUrl: './add-survey.component.html',
@@ -8,7 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddSurveyComponent implements OnInit {
   claimForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private _dataService: DataService) {
 
     this.createClaimForm();
 
@@ -34,5 +35,13 @@ export class AddSurveyComponent implements OnInit {
   }
   submitForm() {
     console.log(this.claimForm.value);
+    this._dataService.addSurvey(this.claimForm.value).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
   }
 }
