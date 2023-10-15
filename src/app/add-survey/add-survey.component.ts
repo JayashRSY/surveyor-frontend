@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
 @Component({
@@ -8,14 +8,20 @@ import { DataService } from '../services/data.service';
 })
 export class AddSurveyComponent implements OnInit {
   claimForm: FormGroup;
+  @Input() editClaimData: any;
+
   constructor(private formBuilder: FormBuilder,
     private _dataService: DataService) {
-
     this.createClaimForm();
-
   }
 
   ngOnInit(): void {
+    if (this.editClaimData) {
+      console.log('====================================');
+      console.log(this.editClaimData);
+      console.log('====================================');
+      this.claimForm.patchValue(this.editClaimData);
+    }
   }
   createClaimForm() {
     this.claimForm = this.formBuilder.group({
@@ -35,13 +41,25 @@ export class AddSurveyComponent implements OnInit {
   }
   submitForm() {
     console.log(this.claimForm.value);
-    this._dataService.addSurvey(this.claimForm.value).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.error('Error:', error);
-      }
-    );
+    if (!this.editClaimData) {
+      this._dataService.addSurvey(this.claimForm.value).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.error('Error:', error);
+        }
+      );
+    }
+    else {
+      this._dataService.updateSurvey(this.claimForm.value).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.error('Error:', error);
+        }
+      );
+    }
   }
 }

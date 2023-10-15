@@ -19,7 +19,7 @@
       <div class="col-6">
         <label for="policyNo"
           class="form-label">Policy Number</label>
-        <input type="number"
+        <input type="text"
           id="policyNo"
           class="form-control"
           formControlName="policyNo">
@@ -122,17 +122,27 @@
           *ngIf="claimForm.get('estimateLoss')?.invalid && claimForm.get('estimateLoss')?.touched">
           Estimate Loss is required.</div>
       </div>
-
-      <div class="form-label col-6">
-        <label for="withdrawn">Withdrawn</label>
-        <input type="checkbox"
-          id="withdrawn"
-          formControlName="withdrawn">
-
-        <label for="closed">Closed</label>
-        <input type="checkbox"
-          id="closed"
-          formControlName="closed">
+      <div class="col-6 pt-3">
+        <div class="form-check">
+          <input class="form-check-input"
+            type="checkbox"
+            id="withdrawn"
+            formControlName="withdrawn">
+          <label class="form-check-label"
+            for="flexCheckDefault">
+            Withdrawn
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input"
+            type="checkbox"
+            id="closed"
+            formControlName="closed">
+          <label class="form-check-label"
+            for="flexCheckChecked">
+            Closed
+          </label>
+        </div>
       </div>
     </div>
 
@@ -148,8 +158,10 @@
         Claim Approved Amount is required.</div>
     </div>
 
-    <button [disabled]="claimForm.invalid"
-      type="submit"
-      class="btn btn-primary">Submit</button>
+    <div class="mt-4">
+      <button [disabled]="claimForm.invalid"
+        type="submit"
+        class="btn btn-primary">{{!editClaimData? 'Add': 'Update'}}</button>
+    </div>
   </form>
 </div>
